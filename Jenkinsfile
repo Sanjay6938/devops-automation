@@ -6,25 +6,25 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ShubhamBMatere/devops-automation.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Sanjay6938/devops-automation.git']])
                 sh 'mvn clean install'
             }
         }
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t shubhambmatere/devops-integration .'
+                    sh 'docker build -t Johnu4693/devops-integration .'
                 }
             }
         }
         stage('Push image to Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'dockerhubpasswrd', variable: 'dockerhubpasswrd')]) {
-                   sh 'docker login -u shubhambmatere -p ${dockerhubpasswrd}'
+                   withCredentials([string(credentialsId: 'Dockercredentails', variable: 'Dockercredentails')]) {
+                   sh 'docker login -u Johnu4693 -p ${Dockercredentails}'
 
 }
-                   sh 'docker push shubhambmatere/devops-integration'
+                   sh 'docker push Johnu4693/devops-integration'
                 }
             }
         }
