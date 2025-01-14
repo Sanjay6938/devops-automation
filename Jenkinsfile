@@ -31,7 +31,13 @@ pipeline {
         stage('Deploy to k8s') {
             steps {
                 script {
-                    kubernetesDeploy(configs: 'deploymentservice.yaml', kubeconfigId: 'k8sConfig')
+                    withCredentials([file(credentialsId: 'k8sConfig', variable: 'KUBECONFIG')]) {
+                        sh '''
+                        export KUBECONFIG=${KUBECONFIG}
+                        kubectl apply -f deploymentservice.yaml
+                        kubectl get pods
+                        '''
+                    }
                 }
             }
         }
